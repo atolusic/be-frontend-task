@@ -5,12 +5,29 @@ import "./App.css";
 import Color from "./Color";
 
 class App extends Component {
+  state = {
+    text: "Color"
+  };
+
+  onInputChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
   render() {
+    const { text } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <Color />
+          <input
+            type="text"
+            name="text"
+            value={text}
+            onChange={e => this.onInputChange(e)}
+          />
+          <Color text={text} />
           <a
             className="App-link"
             href="https://reactjs.org"

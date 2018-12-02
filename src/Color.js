@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 class Color extends React.Component {
   state = {
@@ -7,13 +8,17 @@ class Color extends React.Component {
     color: "#000"
   };
   async componentDidMount() {
-    const url = "http://www.colr.org/json/color/random";
-    const color1 = await axios.get(url);
-    const color2 = await axios.get(url);
+    try {
+      const url = "http://www.colr.org/json/color/random";
+      const color1 = await axios.get(url);
+      const color2 = await axios.get(url);
 
-    this.setState({
-      colors: [color1.data.new_color, color2.data.new_color]
-    });
+      this.setState({
+        colors: [color1.data.new_color, color2.data.new_color]
+      });
+    } catch (e) {
+      alert("Cannot fetch colors");
+    }
   }
 
   onClickHandler = () => {
@@ -29,18 +34,23 @@ class Color extends React.Component {
 
   render() {
     const { colors } = this.state;
+    const { text } = this.props;
     return (
       <div>
         <button
           disabled={colors.length === 0}
-          style={{ color: this.state.color }}
+          style={{ color: this.state.color, fontSize: "2rem" }}
           onClick={this.onClickHandler}
         >
-          Color
+          {text}
         </button>
       </div>
     );
   }
 }
+
+Color.propTypes = {
+  text: PropTypes.string.isRequired
+};
 
 export default Color;
