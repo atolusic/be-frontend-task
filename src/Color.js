@@ -23,24 +23,23 @@ class Color extends React.Component {
 
   onClickHandler = () => {
     const { colors } = this.state;
+    const randomColor = `#${colors[Math.floor(Math.random() * colors.length)]}`;
+    const blackWithRandom = ["#000", randomColor];
     this.setState({
-      color: `#${colors[Math.floor(Math.random() * colors.length)]}`
+      color: blackWithRandom[Math.floor(Math.random() * blackWithRandom.length)]
     });
   };
 
   render() {
-    const { colors } = this.state;
+    const { colors, color } = this.state;
     const { text } = this.props;
-    const blackWithRandom = ["#000", this.state.color];
+
     return (
       <div>
         <button
           disabled={colors.length === 0}
           style={{
-            color:
-              blackWithRandom[
-                Math.floor(Math.random() * blackWithRandom.length)
-              ],
+            color,
             fontSize: "2rem"
           }}
           onClick={this.onClickHandler}
